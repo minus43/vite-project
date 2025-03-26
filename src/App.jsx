@@ -1,6 +1,8 @@
 import { useState } from 'react'
-// import './App.css'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Link, NavLink } from 'react-router-dom'
+import './App.css'
+
+
 function Home() {
   return (
     <div>
@@ -33,9 +35,9 @@ function App() {
     <div>
       <h1>Hello React Router DOM</h1>
       <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/topics">Topics</a></li>
-        <li><a href="/contact">Contact</a></li>
+        <li><NavLink to="/">Home</NavLink></li>
+        <li><NavLink to="/topics">Topics</NavLink></li>
+        <li><NavLink to="/contact">Contact</NavLink></li>
       </ul>
       <Routes>
         <Route path='/' element={<Home />} />
