@@ -1,98 +1,40 @@
-import { useState } from 'react'
-import { BrowserRouter, Routes, Route, Link, NavLink, useParams } from 'react-router-dom'
+import styled from 'styled-components';
 import './App.css'
 
-var contents =[
-  {
-    id:1,
-    title:'HTML',
-    description:'HTML is ...'
-  },
-  {
-    id:2,
-    title:'JS',
-    description:'JS is ...'
-  },
-  {
-    id:3,
-    title:'React',
-    description:'React is ...'
-  }
-]
+const SimpleButton = styled.button`
+  color: white;
+  background-color: green;
+`;
 
-function Home() {
-  return (
-    <div>
-      <h2>Home</h2>
-      Home...
-    </div>
-  );
+const LargeButton = styled(SimpleButton)`
+  font-size: 50px;
+`;
+
+const ReactButton = props => {
+  console.log('props',props);
+  return <button className={props.className}>{props.children}</button>
 }
 
-function Topic(){
-  var params = useParams();
-  var topic_id = params.topic_id;
-  var selected_topic = {
-    title: 'Sorry',
-    description:'Not Found'
-  };
-  for (var i =0; i < contents.length; i++) {
-    if (contents[i].id == Number(topic_id)) {
-      selected_topic = contents[i];
-      break;
-    }
-  }
-  console.log(params);
-  return (
-    <div>
-      <h2>{selected_topic.title}</h2>
-      {selected_topic.description}
-    </div>
-  );
-}
+const ReactLargeButton = styled(ReactButton)`
+  font-size: 50px;
+`;
 
-function Topics() {
-  var lis=[];
-  for (var i =0; i<contents.length; i++) {
-    lis.push(<li key={contents[i].id}><NavLink to={`/topics/${contents[i].id}`}>{contents[i].title}</NavLink></li>)
-  }
-  return (
-    <div>
-      <h2>Topics</h2>
-      <ul>
-        {lis}
-      </ul>
-      <Routes>
-        <Route path='/:topic_id' element={<Topic />} />
-      </Routes>
-    </div>
-  );
-}
-
-function Contact() {
-  return (
-    <div>
-      <h2>Contact</h2>
-      Contact...
-    </div>
-  );
-}
+const PrimaryButton = styled.button`
+  color: ${props => props.primary ? 'white' : 'black'};
+  background-color: ${props => props.primary ? 'blue' : 'gray'};
+`;
 
 function App() {
   return (
     <div>
-      <h1>Hello React Router DOM</h1>
-      <ul>
-        <li><NavLink to="/">Home</NavLink></li>
-        <li><NavLink to="/topics">Topics</NavLink></li>
-        <li><NavLink to="/contact">Contact</NavLink></li>
-      </ul>
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/topics/*' element={<Topics />} />
-        <Route path='/contact' element={<Contact />} />
-        <Route path='*' element={'Not Found'} />
-      </Routes>
+     <SimpleButton>Simple</SimpleButton>
+     <LargeButton>Large</LargeButton>
+     <br />
+     <ReactButton>React</ReactButton>
+     <ReactLargeButton>React Large</ReactLargeButton>
+     <br />
+     <PrimaryButton>Normal</PrimaryButton>
+     <PrimaryButton primary>Primary</PrimaryButton>
     </div>
   );
 }
