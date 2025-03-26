@@ -1,12 +1,6 @@
-# React + Vite
+# 리액트 공부 겸 하고 있는 프로젝트
+[원본](https://reactrouter.com/en/main/start/tutorial)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+원래는 next.js로 진행해보려고 했는데 `REact-Router-DOM` 라이브러리의 경우 next에서는 자체 라우팅 기능이 있어서 React-Router(v7) 으로 하려고 했으나(...내 멘탈)
+이것도 폴더 기반 라우팅이라서 React-Router-DOM 으로 진행하기가 좀 그랬다...
+그래서 vite로 진행해보았다.
