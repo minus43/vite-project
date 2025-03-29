@@ -1,50 +1,44 @@
-import React, {createContext, useContext} from 'react';
-import "./style.css";
-
-const themeDefault = { border: '10px solid red'};
-const ThemeContext = createContext(themeDefault);
+import React, {useReducer, useState} from 'react';
 
 
 function App() {
-  const theme = useContext(ThemeContext);
+  const [number, setNumber] = useState(1);
+  function countReducer(oldCount, action) {
+    if (action.type === 'DOWN') {
+      return oldCount - action.number;
+    } else if (action.type === 'RESET') {
+      return 0;
+    } else if (action.type === 'UP') {
+      return oldCount + action.number;
+    }
+  }
+
+  const [count, countDispatch] = useReducer(countReducer, 0);
+  function down() {
+    countDispatch({type: 'DOWN', number: number});
+  }
+  
+  function reset() {
+    countDispatch({type: 'RESET', number: number});
+  }
+  
+  function up() {
+    countDispatch({type: 'UP', number: number});
+  }
+
+  function changeNumber(e) {
+    setNumber(Number(e.target.value));
+  }
+
   return (
-    <ThemeContext.Provider value={{border: '10px solid blue'}}>
-    <div className="root" style={theme}>
-      <h1>Hello World!</h1>
-      <Sub1/>
+    <div >
+      <input type="button" value="-" onClick={down} />
+      <input type="button" value="0" onClick={reset} />
+      <input type="button" value="+" onClick={up} />
+      <input type="text" value={number} onChange={changeNumber}/>
+      <span>{count}</span>
     </div>
-    </ThemeContext.Provider>
   );
 }
 
-function Sub1() {
-  const theme = useContext(ThemeContext);
-  return (
-    <ThemeContext.Provider value={{border: '10px solid green'}}>
-    <div style={theme}>
-      <h1>Sub1</h1>
-      <Sub2/>
-    </div>   
-    </ThemeContext.Provider>
-  )
-}
-
-function Sub2() {
-  const theme = useContext(ThemeContext);
-  return (
-    <div style={theme}>
-      <h1>Sub2</h1>
-      <Sub3/>
-    </div>
-  )
-}
-
-function Sub3() {
-  const theme = useContext(ThemeContext);
-  return (
-    <div style={theme}>
-      <h1>Sub3</h1>
-    </div>
-  )
-}
 export default App
