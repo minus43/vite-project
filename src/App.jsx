@@ -1,44 +1,99 @@
-import React, {useReducer, useState} from 'react';
+import { useState } from 'react';
+import './App.css';
+import { configureStore } from '@reduxjs/toolkit';
+import { createStore } from 'redux';
+import { Provider, useSelector, useDispatch, connect } from 'react-redux';
 
+
+
+function reducer(currentState, action) {
+  if (currentState === undefined) {
+    return {
+      number: 1,
+    };
+  }
+  const newState = { ...currentState };
+  if (action.type === 'PLUS') {
+    newState.number++;
+  }
+  return newState;
+}
+const store = createStore(reducer);
 
 function App() {
-  const [number, setNumber] = useState(1);
-  function countReducer(oldCount, action) {
-    if (action.type === 'DOWN') {
-      return oldCount - action.number;
-    } else if (action.type === 'RESET') {
-      return 0;
-    } else if (action.type === 'UP') {
-      return oldCount + action.number;
-    }
-  }
-
-  const [count, countDispatch] = useReducer(countReducer, 0);
-  function down() {
-    countDispatch({type: 'DOWN', number: number});
-  }
-  
-  function reset() {
-    countDispatch({type: 'RESET', number: number});
-  }
-  
-  function up() {
-    countDispatch({type: 'UP', number: number});
-  }
-
-  function changeNumber(e) {
-    setNumber(Number(e.target.value));
-  }
 
   return (
-    <div >
-      <input type="button" value="-" onClick={down} />
-      <input type="button" value="0" onClick={reset} />
-      <input type="button" value="+" onClick={up} />
-      <input type="text" value={number} onChange={changeNumber}/>
-      <span>{count}</span>
+    <div id="container">
+      <h1>Root </h1>
+      <Provider store={store}>
+      <div id="grid">
+        <Left1></Left1>
+        <Right1></Right1>
+      </div>
+      </Provider>
     </div>
   );
 }
 
-export default App
+function Left1(props) {
+  return (
+    <div>
+      <h1>Left1</h1>
+      <Left2></Left2>
+    </div>
+  );
+}
+
+function Left2(props) {
+  return (
+    <div>
+      <h1>Left2</h1>
+      <Left3></Left3>
+    </div>
+  );
+}
+
+function Left3(props) {
+  const number = useSelector((state) => state.number);
+  return (
+    <div>
+      <h1>Left3 : {number}</h1>
+    </div>
+  );
+}
+
+function Right1(props) {
+  return (
+    <div>
+      <h1>Right1</h1>
+      <Right2></Right2>
+    </div>
+  );
+}
+
+function Right2(props) {
+  return (
+    <div>
+      <h1>Right2</h1>
+      <Right3></Right3>
+    </div>
+  );
+}
+
+function Right3(props) {
+  const dispatch = useDispatch();
+  return (
+    <div>
+      <h1>Right3</h1>
+      <input
+        type="button"
+        value="+"
+        onClick={() => {
+          dispatch({type: 'PLUS'});
+        }}
+      ></input>
+    </div>
+  );
+}
+
+export default App;
